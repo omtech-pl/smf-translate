@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMF Translate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .app {
+      display: flex;
+      max-width: 1200px;
+      margin: 1rem auto;
+      flex-wrap: wrap;
+      }
+      .app > div {
+      max-width: 580px;
+      width: 100%;
+      margin: 1rem auto;
+      }
+    </style>
+  </head>
+  <body class="dark:bg-gray-900 dark:border-gray-600 dark:text-white">
+    <div class="app">
+      <div class="input-container" style="position: relative;">
+        <ul class="language-menu flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+          <li class="me-2">
+            <a href="#" aria-current="page" class="language-link inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500" data-lang="en">English</a>
+          </li>
+          <!-- <li class="me-2">
+            <a href="#" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300" data-lang="pl">Polski</a>
+            </li> -->
+          <li class="me-2 translate-btn-container" style="position: absolute; top: 0; right: 0">
+            <button id="translate" class="translate-btn inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">TRANSLATE</button>
+          </li>
+        </ul>
+        <textarea id="input" rows="16" class="input-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+      </div>
+      <div class="output-container">
+        <ul class="language-menu flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+          <li class="me-2">
+            <a href="#" id="cs" data-placeholder="Překlad" class="language-link inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">český</a>
+          </li>
+          <li class="me-2">
+            <a href="#" id="de" data-placeholder="Übersetzung" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Deutsch</a>
+          </li>
+          <li class="me-2">
+            <a href="#" id="pl" data-placeholder="Tłumaczenie" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Polski</a>
+          </li>
+          <li class="me-2">
+            <a href="#" id="uk" data-placeholder="Переклад" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">українська</a>
+          </li>
+          <li class="me-2">
+            <a href="#" id="sk" data-placeholder="Preklad" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">slovenský</a>
+          </li>
+          <!-- <li>
+            <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">English</a>
+            </li> -->
+        </ul>
+        <textarea id="output" rows="16" class="output-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Překlad"></textarea>
+      </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
