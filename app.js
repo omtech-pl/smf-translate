@@ -20,6 +20,7 @@ class TranslationApp {
     this.console = document.getElementById('console');
 
     this.setupEventListeners();
+    this.initializeDarkMode();
   }
 
   setupEventListeners() {
@@ -145,6 +146,20 @@ class TranslationApp {
 
   clearConsole() {
     this.console.textContent = '';
+  }
+
+  initializeDarkMode() {
+    const lightSwitch = document.querySelector('.light-switch');
+    const darkMode = localStorage.getItem('dark-mode') === 'true';
+
+    lightSwitch.checked = darkMode || (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.classList.toggle('dark', lightSwitch.checked);
+
+    lightSwitch.addEventListener('change', () => {
+      const isDark = lightSwitch.checked;
+      document.documentElement.classList.toggle('dark', isDark);
+      localStorage.setItem('dark-mode', isDark);
+    });
   }
 }
 
