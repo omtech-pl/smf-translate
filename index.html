@@ -14,11 +14,24 @@
       }
       .app > div {
       max-width: 580px;
+      height: fit-content;
       width: 100%;
       margin: 1rem auto;
       }
       .app textarea {
       min-height: 120px;
+      }
+      ::-webkit-scrollbar,
+      ::-webkit-scrollbar-corner {
+        width: 0;
+        height: 0;
+        -webkit-border-radius: 0;
+      }
+      ::-webkit-scrollbar-track {
+        -webkit-border-radius: 0;
+      }
+      ::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 0;
       }
     </style>
   </head>
@@ -29,10 +42,7 @@
           <li class="me-2">
             <a href="#" aria-current="page" class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500" data-lang="en">English</a>
           </li>
-          <!-- <li class="me-2">
-            <a href="#" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300" data-lang="pl">Polski</a>
-            </li> -->
-          <li class="me-2 translate-btn-container" style="position: absolute; top: 0; right: 0">
+          <li class="translate-btn-container" style="position: absolute; top: 0; right: 0">
             <button id="translate" class="translate-btn inline-flex p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">TRANSLATE &nbsp;
               <svg class="h-5 w-5 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="21" height="21">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
@@ -40,7 +50,9 @@
             </button>
           </li>
         </ul>
-        <textarea id="input" rows="16" class="input-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+        <textarea id="input" rows="16" class="input-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea><br>
+        <div id="console" class="console text-sm text-red-500">
+        </div>
       </div>
       <div class="output-container" style="position: relative;">
         <ul class="language-menu flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -59,9 +71,6 @@
           <li class="me-2">
             <a href="#" id="sk" data-placeholder="Preklad" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">slovenský</a>
           </li>
-          <!-- <li>
-            <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">English</a>
-            </li> -->
         </ul>
         <textarea id="output" rows="16" class="output-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Překlad"></textarea>
         <button class="inline-flex items-center" style="position: absolute; right: 8px; bottom: 8px;" id="copy" type="button">

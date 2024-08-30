@@ -17,8 +17,7 @@ class TranslationApp {
     this.translateBtn = document.getElementById('translate');
     this.copyBtn = document.getElementById('copy');
     this.tooltip = document.getElementById('tooltip');
-
-
+    this.console = document.getElementById('console');
 
     this.setupEventListeners();
   }
@@ -44,6 +43,7 @@ class TranslationApp {
         console.log('SQL copied to clipboard successfully!');
       })
       .catch(err => {
+        this.console.textContent = 'Failed to copy SQL to clipboard: ' +  err
         console.error('Failed to copy SQL to clipboard: ', err);
       });
   }
@@ -113,6 +113,10 @@ class TranslationApp {
   }
 
   async sendToOpenAi(data) {
+    if (!this.openai.apikey) {
+      this.console.textContent = 'Error! Apikey is invalid or missing.\n';
+      return
+    }
     try {
       const response = await fetch(this.openai.api, {
         method: 'POST',
@@ -124,6 +128,7 @@ class TranslationApp {
       });
 
       if (!response.ok) {
+        this.console.textContent += 'HTTP error! status: ' +  response.status
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -131,6 +136,7 @@ class TranslationApp {
       const message = result.choices?.[0]?.message?.content || 'Translation failed or no content received';
       return JSON.parse(message.replace(/'/g, '`'));
     } catch (error) {
+      this.console.textContent += 'Error: ' +  error
       console.error('Error:', error);
       return null;
     }
