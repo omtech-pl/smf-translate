@@ -7,90 +7,111 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
-        darkMode: 'selector'
+          darkMode: 'class'
       };
     </script>
     <style>
       .app {
-      min-width: 320px;
       display: flex;
-      max-width: 1200px;
-      margin: 1rem auto;
-      flex-wrap: wrap;
-      }
-      .app > div {
-      max-width: 580px;
-      height: fit-content;
-      width: 100%;
-      margin: 1rem auto;
+      flex-direction: column;
+      max-width: 1000px;
+      margin: 2rem auto;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
       .app textarea {
-      min-height: 120px;
+      resize: none;
+      border-radius: 0.5rem;
+      min-height: 220px;
       }
-      ::-webkit-scrollbar,
-      ::-webkit-scrollbar-corner {
-        width: 0;
-        height: 0;
-        -webkit-border-radius: 0;
+      .language-menu {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
       }
-      ::-webkit-scrollbar-track {
-        -webkit-border-radius: 0;
+      .translate-btn-container {
+      margin-left: auto;
       }
-      ::-webkit-scrollbar-thumb {
-        -webkit-border-radius: 0;
+      .dark-mode-toggle {
+      display: flex;
+      justify-content: center;
+      padding-top: 1rem;
+      }
+      .language-link.active,
+      a.active {
+      border-bottom: 2px solid #3b82f6;
+      color: #3b82f6;
+      }
+      .translate-btn {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background-color: #3b82f6;
+      color: white;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s;
+      }
+      .translate-btn:hover {
+      background-color: #2563eb;
+      }
+      .output-container {
+      position: relative;
+      }
+      #copy {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      }
+      #tooltip {
+      transition: opacity 0.3s;
       }
     </style>
   </head>
-  <body class="dark:bg-gray-900 dark:border-gray-600 dark:text-white">
-    <div class="app">
-      <div class="input-container" style="position: relative;">
-        <ul class="language-menu flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-          <li class="me-2">
-            <a href="#" aria-current="page" class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500" data-lang="en">English</a>
+  <body class="dark:bg-gray-900 dark:text-white">
+    <div class="app bg-white dark:bg-gray-800">
+      <div class="input-container">
+        <ul class="language-menu text-sm font-medium text-gray-500 dark:text-gray-400">
+          <li>
+            <a href="#" class="inline-block p-4 rounded-t-lg active" data-lang="en">English</a>
           </li>
-          <li class="translate-btn-container" style="position: absolute; top: 0; right: 0">
-            <button id="translate" class="translate-btn inline-flex p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">TRANSLATE &nbsp;
-              <svg class="h-5 w-5 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="21" height="21">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-            </svg>
+          <li class="translate-btn-container">
+            <button id="translate" class="translate-btn">
+              TRANSLATE
+              <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="21" height="21">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+              </svg>
             </button>
           </li>
         </ul>
-        <textarea id="input" rows="16" class="input-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea><br>
-        <div id="console" class="console text-sm text-red-500">
-        </div>
+        <textarea id="input" class="input-textarea block p-4 w-full bg-gray-100 dark:bg-gray-700" placeholder="Write your thoughts here..."></textarea>
+        <div id="console" class="console text-sm text-red-500 pt-2"></div>
       </div>
-      <div class="output-container" style="position: relative;">
-        <ul class="language-menu flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-          <li class="me-2">
-            <a href="#" id="cs" data-placeholder="Překlad" class="language-link inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">český</a>
-          </li>
-          <li class="me-2">
-            <a href="#" id="de" data-placeholder="Übersetzung" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Deutsch</a>
-          </li>
-          <li class="me-2">
-            <a href="#" id="pl" data-placeholder="Tłumaczenie" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Polski</a>
-          </li>
-          <li class="me-2">
-            <a href="#" id="uk" data-placeholder="Переклад" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">українська</a>
-          </li>
-          <li class="me-2">
-            <a href="#" id="sk" data-placeholder="Preklad" class="language-link inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">slovenský</a>
-          </li>
+      <div class="output-container">
+        <ul class="language-menu text-sm font-medium text-gray-500 dark:text-gray-400">
+          <li><a href="#" id="cs" data-placeholder="Překlad" class="language-link inline-block p-4 rounded-t-lg">český</a></li>
+          <li><a href="#" id="de" data-placeholder="Übersetzung" class="language-link inline-block p-4 rounded-t-lg">Deutsch</a></li>
+          <li><a href="#" id="pl" data-placeholder="Tłumaczenie" class="language-link inline-block p-4 rounded-t-lg">Polski</a></li>
+          <li><a href="#" id="uk" data-placeholder="Переклад" class="language-link inline-block p-4 rounded-t-lg">українська</a></li>
+          <li><a href="#" id="sk" data-placeholder="Preklad" class="language-link inline-block p-4 rounded-t-lg">slovenský</a></li>
         </ul>
-        <textarea id="output" rows="16" class="output-textarea block p-2.5 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Překlad"></textarea>
-        <button class="inline-flex items-center" style="position: absolute; right: 8px; bottom: 8px;" id="copy" type="button">
+        <textarea id="output" class="output-textarea block p-4 w-full bg-gray-100 dark:bg-gray-700" placeholder="Překlad"></textarea>
+        <button id="copy">
           <p class="text-sm text-green-500" id="tooltip"></p>
-          <svg class="h-8 w-8 text-slate-700 transition-colors duration-200 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z"/>
-            <rect x="8" y="8" width="12" height="12" rx="2"/>
-            <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"/>
+          <svg class="h-8 w-8 text-gray-700 dark:text-gray-300" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+            <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
           </svg>
         </button>
       </div>
-      <div class="flex justify-center ml-3">
-        <input id="mode" type="checkbox" name="light-switch" class="light-switch absolute w-9 h-9 p-0 m-[-1px] overflow-hidden opacity-0 whitespace-nowrap border-0 z-[99] cursor-pointer" />
-        <label class="relative cursor-pointer w-12 p-2" for="mode">
+      <div class="dark-mode-toggle">
+        <input id="mode" type="checkbox" name="light-switch" class="light-switch hidden" />
+        <label for="mode" class="relative cursor-pointer w-12 p-2">
           <svg class="dark:hidden" width="24" height="16" xmlns="http://www.w3.org/2000/svg">
             <path class="fill-slate-300" d="M7 0h2v2H7zM12.88 1.637l1.414 1.415-1.415 1.413-1.413-1.414zM14 7h2v2h-2zM12.95 14.433l-1.414-1.413 1.413-1.415 1.415 1.414zM7 14h2v2H7zM2.98 14.364l-1.413-1.415 1.414-1.414 1.414 1.415zM0 7h2v2H0zM3.05 1.706 4.463 3.12 3.05 4.535 1.636 3.12z" />
             <path class="fill-slate-400" d="M8 4C5.8 4 4 5.8 4 8s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Z" />
